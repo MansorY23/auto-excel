@@ -1,7 +1,14 @@
 import pandas as pd
-import openpyxl
+from openpyxl import load_workbook
+from typing import Union
+from pathlib import Path
 
 
-def save_excel(df: pd.DataFrame):
-    pass
-    #df.to_excel()
+def save_excel(df: pd.DataFrame,
+               path: Union[Path, str]) -> None:
+    wb = load_workbook(path)
+    ws = wb.active
+    print(ws)
+    wb.save("2024.xlsx")
+    return None
+
