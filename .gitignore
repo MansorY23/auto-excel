@@ -9,7 +9,7 @@ __pycache__/
 categories.py
 test.py
 *.txt
-
+# some
 # C extensions
 *.so
 
