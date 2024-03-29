@@ -1,5 +1,5 @@
 import pandas as pd
-from categories import categories
+from excel import categories
 from pathlib import Path
 from typing import Union
 import logging
