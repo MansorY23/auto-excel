@@ -1,6 +1,5 @@
 from .excel_input import excel_process
-from .excel_output import save_excel
-from .categories import categories
+from categories import categories
 
 __all__ = [
     "excel_process",

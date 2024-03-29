@@ -6,8 +6,9 @@
 __pycache__/
 *.py[cod]
 *$py.class
-excel/categories.py
+categories.py
 test.py
+*.txt
 
 # C extensions
 *.so
