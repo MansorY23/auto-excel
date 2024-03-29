@@ -1,5 +1,4 @@
 import pandas as pd
-from openpyxl import load_workbook
 from typing import Union
 from pathlib import Path
 from datetime import date
