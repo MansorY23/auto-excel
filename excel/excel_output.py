@@ -2,28 +2,31 @@ import pandas as pd
 from typing import Union
 from pathlib import Path
 from datetime import date
+import logging
 
 
-def update_excel(df: pd.DataFrame,
-                 path: Union[Path, str]):
+def df_work():
+    pass
+
+
+def update_excel(daily_excel: pd.DataFrame,
+                 path: Union[Path, str]) -> pd.DataFrame:
+
     today = date.today().day
-    excel = pd.read_excel(path, skiprows=1,
+    monthly_excel = pd.read_excel(path, skiprows=1,
                           sheet_name="ДТ")
-                          #names=["Группа", "1", "2", "3", "4", "5",
-                           #      "6", "7", "8", "9", "10", "11",
-                            #     "12", "13", "14", "15", "16",
-                             #    "17", "18", "19", "20", "21", "22",
-                              #   "23", "24", "25", "26", "27", "28",
-                               #  "29", "30", "31"])
-    excel = excel.dropna(subset=["Группа"])
-    excel = excel.merge(df, on="Группа", how="left")
-    excel[today] = excel[today].fillna(excel[str(today)])
-    excel = excel.drop([str(today)], axis=1)
-    excel = excel.set_index("Группа")
+
+    monthly_excel = monthly_excel.dropna(subset=["Группа"])
+    merged_excel = monthly_excel.merge(daily_excel, on="Группа", how="left")
+    merged_excel[today] = merged_excel[today].fillna(merged_excel[str(today)])
+    merged_excel = merged_excel.drop([str(today)], axis=1)
+    updated_excel = merged_excel.set_index("Группа")
+    updated_excel.loc["расход энергопрогноз".upper()] = daily_excel.sum(numeric_only=True, axis=0)
 
     with pd.ExcelWriter(path, mode="a", engine='openpyxl',
-                        if_sheet_exists='overlay') as writer:
-        print(excel)
-        excel.to_excel(writer, sheet_name='ДТ', startrow=1, startcol=0)
 
-    return excel
+                        if_sheet_exists='overlay') as writer:
+        updated_excel.to_excel(writer, sheet_name='ДТ', startrow=1, startcol=0)
+        logging.info("Excel successfully updated and saved")
+
+    return updated_excel

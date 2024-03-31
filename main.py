@@ -1,9 +1,14 @@
-from excel import excel_process, save_excel
+from excel import excel_process, update_excel
+from outlook import save_attachments
 
 
 def main():
-    df = excel_process("dt_02.03.2024.xls")
-    save_excel(df, "output_test.xlsx")
+    excel_path = save_attachments("ГСМ",
+                                  r"C:\Users\ivanovko\Desktop\DT2024\GSM_AMT\DT_2024\03_march",
+                                    ".xls", "ГСМ АМТ")
+
+    df = excel_process(excel_path)
+    update_excel(df, "output_test.xlsx")
 
 
 if __name__ == "__main__":

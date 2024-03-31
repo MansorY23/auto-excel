@@ -1,6 +1,9 @@
 import datetime
 import os
 import win32com.client
+from pathlib import Path
+from typing import Union
+import logging
 
 
 def get_message(item: str):
@@ -10,19 +13,19 @@ def get_message(item: str):
     return messages
 
 
-def save_attachments(subject: str, path: str,
-                     file_ext: str, messages, ) -> None:
+def save_attachments(subject: str,
+                     path: Union[str, Path],
+                     file_ext: str, item) -> Path:
     today = datetime.date.today()
+    messages = get_message(item)
 
     for message in messages:
         x = message.ReceivedTime
         if message.Subject == subject and x.strftime("%Y-%m-%d") == str(today):
             for attachment in message.Attachments:
                 if file_ext in str(attachment):
-                    print(attachment.FileName)
+                    logging.info("excel was successfully saved to directory")
                     attachment.SaveAsFile(os.path.join(path, str(attachment)))
-    return None
 
+    return Path(os.path.join(path, str(attachment)))
 
-save_attachments("ГСМ", r"C:\Users\ivanovko\Desktop\DT2024\GSM_AMT\DT_2024\03_march",
-                 ".xls", get_message("ГСМ АМТ"))

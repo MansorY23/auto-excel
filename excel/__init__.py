@@ -1,8 +1,7 @@
 from .excel_input import excel_process
-from categories import categories
+from .excel_output import update_excel
 
 __all__ = [
     "excel_process",
-    "save_excel",
-    "categories"
+    "update_excel",
 ]

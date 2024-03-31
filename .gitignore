@@ -6,7 +6,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
-categories.py
+services/categories.py
 test.py
 *.txt
 # some
