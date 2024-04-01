@@ -10,11 +10,12 @@ def df_work():
 
 
 def update_excel(daily_excel: pd.DataFrame,
-                 path: Union[Path, str]) -> pd.DataFrame:
+                 monthly_excel_path: Union[Path, str]) -> pd.DataFrame:
 
     today = date.today().day
-    monthly_excel = pd.read_excel(path, skiprows=1,
-                          sheet_name="ДТ")
+    monthly_excel = pd.read_excel(monthly_excel_path,
+                                  skiprows=1,
+                                  sheet_name="ДТ")
 
     monthly_excel = monthly_excel.dropna(subset=["Группа"])
     merged_excel = monthly_excel.merge(daily_excel, on="Группа", how="left")
@@ -23,8 +24,8 @@ def update_excel(daily_excel: pd.DataFrame,
     updated_excel = merged_excel.set_index("Группа")
     updated_excel.loc["расход энергопрогноз".upper()] = daily_excel.sum(numeric_only=True, axis=0)
 
-    with pd.ExcelWriter(path, mode="a", engine='openpyxl',
-
+    with pd.ExcelWriter(monthly_excel_path,
+                        mode="a", engine='openpyxl',
                         if_sheet_exists='overlay') as writer:
         updated_excel.to_excel(writer, sheet_name='ДТ', startrow=1, startcol=0)
         logging.info("Excel successfully updated and saved")

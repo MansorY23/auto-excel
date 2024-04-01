@@ -1,15 +1,21 @@
 from excel import excel_process, update_excel
 from outlook import save_attachments
+from dotenv import load_dotenv
+import os
+import logging
 
 
 def main():
-    excel_path = save_attachments("ГСМ",
-                                  r"C:\Users\ivanovko\Desktop\DT2024\GSM_AMT\DT_2024\03_march",
-                                    ".xls", "ГСМ АМТ")
+    logging.basicConfig(level=logging.INFO)
+    load_dotenv()
+    #daily_excel_path = save_attachments(os.environ["SUBJECT"],
+    #                                    f"{os.environ['DAILY_EXCEL_PATH']}\03_march",
+    #                                    ".xls", os.environ["INBOX_ITEM"])
 
-    df = excel_process(excel_path)
-    update_excel(df, "output_test.xlsx")
+    daily_excel_df = excel_process(os.environ["DAILY_EXCEL_PATH"])
+    update_excel(daily_excel_df, os.environ["MONTHLY_EXCEL_PATH"])
 
+    return None
 
 if __name__ == "__main__":
     main()

@@ -7,8 +7,9 @@ from datetime import date
 
 
 def excel_process(
-        path: Union[Path, str]) -> pd.DataFrame:
-    df = pd.read_excel(io=path, engine="calamine", header=None,
+        daily_excel_path: Union[Path, str]) -> pd.DataFrame:
+    df = pd.read_excel(io=daily_excel_path, engine="calamine",
+                       header=None,
                        skiprows=10, usecols=[0, 3],
                        names=["item", "number"]
                        )
@@ -27,19 +28,20 @@ def excel_process(
     df["index_column"] = range(1, len(df) + 1)
     df = df.set_index("index_column")
 
-    df = df.set_index("item").groupby(categories).sum().reset_index()
+    agg_df = df.set_index("item").groupby(categories).sum().reset_index()
     # переменная для сравнения сходятся ли данные
-    all_fuel_after_agg = int(df["number"].sum())
+    all_fuel_after_agg = int(agg_df["number"].sum())
 
     if int(all_fuel) != int(all_fuel_after_agg):
-        raise ValueError("Значения не сходятся. Возможно появился новый транспорт")
+        #print(df[df["item"].isin(categories.keys())])
+        raise ValueError("Значения не сходятся. Возможно появился новый транспорт \n"
+                         f"всё топливо: {all_fuel}, подсчитанное топливо: {all_fuel_after_agg}")
     else:
         logging.info("Значения сходятся. Табличка подсчитана верно")
 
-    df = df.rename(columns={"item": "Группа",
+    agg_df = agg_df.rename(columns={"item": "Группа",
                             "number": str(date.today().day)})
-    return df
+    return agg_df
 
 
 
-#excel_process("dt_02.03.2024.xls")
