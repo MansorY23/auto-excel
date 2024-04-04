@@ -33,7 +33,6 @@ def excel_process(
     all_fuel_after_agg = int(agg_df["number"].sum())
 
     if int(all_fuel) != int(all_fuel_after_agg):
-        #print(df[df["item"].isin(categories.keys())])
         raise ValueError("Значения не сходятся. Возможно появился новый транспорт \n"
                          f"всё топливо: {all_fuel}, подсчитанное топливо: {all_fuel_after_agg}")
     else:

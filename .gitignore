@@ -6,7 +6,6 @@
 __pycache__/
 *.py[cod]
 *$py.class
-services/categories.py
 test.py
 *.txt
 # some
@@ -127,7 +126,6 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
 .venv
 env/
 venv/

@@ -22,7 +22,16 @@ def update_excel(daily_excel: pd.DataFrame,
     merged_excel[today] = merged_excel[today].fillna(merged_excel[str(today)])
     merged_excel = merged_excel.drop([str(today)], axis=1)
     updated_excel = merged_excel.set_index("Группа")
-    updated_excel.loc["расход энергопрогноз".upper()] = daily_excel.sum(numeric_only=True, axis=0)
+
+    updated_excel.loc["расход энергопрогноз".upper(), today] = \
+        updated_excel[today].iloc[[0, 1]].sum()
+
+    updated_excel.loc["расход аметистовое".upper(), today] = \
+        updated_excel.loc['Буровые станки "ROC"': 'Насосы Godwin', today].sum()
+
+    updated_excel.loc["ИТОГО - суточный расход", today] = \
+        updated_excel[today].loc[["расход аметистовое".upper(), "расход энергопрогноз".upper()]].sum()
+
 
     with pd.ExcelWriter(monthly_excel_path,
                         mode="a", engine='openpyxl',
