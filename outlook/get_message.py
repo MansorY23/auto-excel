@@ -24,8 +24,9 @@ def save_attachments(subject: str,
         if message.Subject == subject and x.strftime("%Y-%m-%d") == str(today):
             for attachment in message.Attachments:
                 if file_ext in str(attachment):
+                    #attachment.SaveAsFile(os.path.join(path, str(attachment)))
+                    attachment.SaveAsFile(path)
                     logging.info("excel was successfully saved to directory")
-                    attachment.SaveAsFile(os.path.join(path, str(attachment)))
 
-    return Path(os.path.join(path, str(attachment)))
-
+    #return Path(os.path.join(path, str(attachment)))
+    return Path(path)

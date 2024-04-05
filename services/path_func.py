@@ -24,9 +24,11 @@ def daily_excel_name(
     daily_excel_path = f"{folder_path}" \
                        f"DT_{today.year}/" \
                        f"{today.strftime('%m_%B')}/" \
-                       f"дт {today.strftime('%d.%m.%Y')}.xls"
+                       f"dt_{today.strftime('%d.%m.%Y')}.xls"
 
     return daily_excel_path
 
-#get user name
-#print(os.getenv('username'))
+
+# get user name
+# print(os.getenv('username'))
+#print(daily_excel_name("C:/Users/IvanovKO/Desktop/DT2024/GSM_AMT/"))
