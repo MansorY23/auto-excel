@@ -9,4 +9,4 @@ python -m venv venv
 call venv\Scripts\activate.bat
 pip install -r requirements.txt
 
-schtasks /create /sc daily /tn auto-excel /tr C:\Users\%username%\python_project\auto-excel\start.bat /st 19:30
+schtasks /create /sc daily /tn auto-excel /tr C:\Users\%username%\Desktop\python_project\auto-excel\start.bat /st 19:30
