@@ -7,7 +7,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 test.py
-*.txt
+
 # some
 # C extensions
 *.so
