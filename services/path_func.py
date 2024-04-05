@@ -24,7 +24,7 @@ def daily_excel_name(
     daily_excel_path = f"{folder_path}" \
                        f"DT_{today.year}/" \
                        f"{today.strftime('%m_%B')}/" \
-                       f"dt_{today.strftime('%d.%m.%Y')}.xls"
+                       f"дт {today.strftime('%d.%m.%Y')}.xls"
 
     return daily_excel_path
 
