@@ -1,7 +1,9 @@
-from .excel_input import excel_process
-from .excel_output import update_excel
+from .excel_input import process_diesel, process_petrol
+from .excel_output import update_diesel, update_petrol
 
 __all__ = [
-    "excel_process",
-    "update_excel",
+    "process_diesel",
+    "update_diesel",
+    "update_petrol",
+    "process_petrol"
 ]
