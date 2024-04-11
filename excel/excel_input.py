@@ -63,7 +63,7 @@ def process_petrol(
         raise FileNotFoundError(f"В директории нет ежедневного отчёта за сегодняшнее число\n"
                                 f"Ошибка: {e}")
 
-    all_petrol = int(df["number"].loc[df["item"] == "Бензин АИ-92 (кг.)"].iloc[0])
+    all_petrol = int(df["number"].loc[df["item"] == "Бензин автомобильный АИ-92-К5 ГОСТ 32513-2013"].iloc[0])
     # сначала забираем значения, у которых нет складского номера
     df_without_nums = df[df.item.isin(categories_petrol.keys())]
 

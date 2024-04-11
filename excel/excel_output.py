@@ -18,7 +18,6 @@ def update_diesel(daily_excel: pd.DataFrame,
 
     monthly_excel = monthly_excel.dropna(subset=["Группа"])
     merged_excel = monthly_excel.merge(daily_excel, on="Группа", how="left")
-    #merged_excel[today] = merged_excel[today].fillna(merged_excel[str(today)])
     merged_excel[today] = merged_excel[str(today)]
     merged_excel = merged_excel.drop([str(today)], axis=1)
     updated_excel = merged_excel.set_index("Группа")
@@ -54,7 +53,6 @@ def update_petrol(daily_excel: pd.DataFrame,
 
     monthly_excel = monthly_excel.dropna(subset=["Группа"])
     merged_excel = monthly_excel.merge(daily_excel, on="Группа", how="left")
-    #merged_excel[today] = merged_excel[today].fillna(merged_excel[str(today)])
     merged_excel[today] = merged_excel[str(today)]
 
     merged_excel = merged_excel.drop([str(today)], axis=1)
