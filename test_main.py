@@ -5,7 +5,8 @@ from excel import (update_petrol,
 from outlook import save_attachments
 from dotenv import load_dotenv
 from services import (daily_excel_name,
-                      monthly_excel_name)
+                      monthly_excel_name,
+                      create_montly_folder)
 import os
 import logging
 
@@ -16,7 +17,7 @@ def main():
     #daily_excel_path = save_attachments(os.environ["SUBJECT"],
     #                    daily_excel_name(f"C:/Users/{os.getenv('username')}/Desktop/{os.environ['EXCEL_PATH']}"),
     #                                    ".xls", os.environ["INBOX_ITEM"])
-    path = f"C:/Users/{os.getenv('username')}/Desktop/{os.environ['EXCEL_PATH']}"
+    path = create_montly_folder()
 
     monthly_excel = monthly_excel_name(path)
     daily_excel = daily_excel_name(path)

@@ -276,10 +276,3 @@ categories_petrol = {
 
 
 
-# код не работает, т.к excel не читается корректно
-#def get_categories(path):
-#    df = pd.read_excel(io=path, engine="xlrd", skipfooter=25,
-#                        header=None, usecols=[0, 1])
-#    for i in df.iterrows():
-#        print(i)
-
