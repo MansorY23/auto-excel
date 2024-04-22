@@ -20,9 +20,11 @@ def process_diesel(
     except FileNotFoundError as e:
         raise FileNotFoundError(f"В директории нет ежедневного отчёта за сегодняшнее число\n"
                                 f"Ошибка: {e}")
+    all_diesel_series = first_df["number"].loc[first_df["item"] == "Дизтопливо (кг.)"]
+    all_diesel = int(all_diesel_series.iloc[0])
 
-    all_diesel = int(first_df["number"].loc[first_df["item"] == "Дизтопливо (кг.)"].iloc[0])
-    df_without_nums = first_df[first_df.item.isin(categories_diesel.keys())]
+    first_df = first_df.loc[all_diesel_series.index[0]:]
+    df_without_nums = first_df[first_df["item"].isin(categories_diesel.keys())]
 
     # регулярка, чтобы забирать только складские номера машин
     df_without_duplicates = first_df[~first_df["item"].str.match("(\d{2}).(\d{2}).(\d{4}) (\d{1,2}):(\d{2}):(\d{2})")]
@@ -64,8 +66,13 @@ def process_petrol(
         raise FileNotFoundError(f"В директории нет ежедневного отчёта за сегодняшнее число\n"
                                 f"Ошибка: {e}")
 
-    all_petrol = int(first_df["number"].loc[first_df["item"] ==
-                                            "Бензин автомобильный АИ-92-К5 ГОСТ 32513-2013"].iloc[0])
+    all_petrol_series = first_df["number"].loc[first_df["item"] ==
+                                            "Бензин автомобильный АИ-92-К5 ГОСТ 32513-2013"]
+    all_petrol = int(all_petrol_series.iloc[0])
+    diesel_index = first_df["number"].loc[first_df["item"] ==
+                                            "Дизтопливо (кг.)"]
+
+    first_df = first_df.loc[all_petrol_series.index[0]:diesel_index.index[0]]
     # сначала забираем значения, у которых нет складского номера
     df_without_nums = first_df[first_df.item.isin(categories_petrol.keys())]
 
@@ -103,7 +110,7 @@ def undefined_rows(df: pd.DataFrame,
     if type == "diesel":
         machinery_with_plate = df[~df.item.isin(categories_diesel.keys())]
         print(machinery_with_plate)
-        #return f"В словаре Дизеля не хватает техники с хоз.номером: {machinery_with_plate['item'].item()}\n" \
+        # return f"В словаре Дизеля не хватает техники с хоз.номером: {machinery_with_plate['item'].item()}\n" \
         #       f"Добавьте её в файл services/categories.py"
 
     if type == "petrol":
